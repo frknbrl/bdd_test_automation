@@ -144,12 +144,19 @@
 						<configuration>
 							<projectName>Cucumber HTML Reports</projectName>
 							<outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
+							<inputDirectory>${project.build.directory}/</inputDirectory>
+
 							<jsonFiles>
-								<param>**/cucumber*.json</param>
+								<param>**/*.json</param>
 							</jsonFiles>
-							<mergeFeaturesById>true</mergeFeaturesById>
-							<checkBuildResult>false</checkBuildResult>
-							<skipEmptyJSONFiles>true</skipEmptyJSONFiles>
+							<classificationDirectory>${project.build.directory}/</classificationDirectory>
+							<classificationFiles>
+								<!-- supports wildcard or name pattern -->
+								<param>sample.properties</param>
+								<param>other.properties</param>
+							</classificationFiles>
+							<checkBuildResult>true</checkBuildResult>
+
 						</configuration>
 					</execution>
 				</executions>

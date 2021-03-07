@@ -30,6 +30,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class HepsiburadaTest {
 
     public static WebDriver driver;
+    public static String productName;
+    public static String quantity;
+    public static String price;
 
     @Given("Go to the {string} url")
     public void openHomePage(String arg0) {
@@ -77,6 +80,15 @@ public class HepsiburadaTest {
         actions.click().build().perform();
     }
 
+    @When("Get product name {string}, quantity {string} and price {string}")
+    public void getProductDetails(String arg0, String arg1, String arg2) {
+        if(!driver.findElements(By.xpath(arg0)).isEmpty()){
+            productName = driver.findElement(By.xpath(arg0)).getText();
+            quantity = driver.findElement(By.id(arg1)).getAttribute("value");;
+            price = driver.findElement(By.id(arg2)).getText();
+        }else{ }
+    }
+
     @Then("Check {string} current value and {string} reference value with xpath")
     public void checkCurrentAndReference(String arg0, String arg1) {
         String currentValue = driver.findElement(By.xpath(arg0)).getText();
@@ -87,6 +99,21 @@ public class HepsiburadaTest {
     public void checkPageTitle(String arg0) {
         String actualTitle = driver.getTitle();
         Assert.assertEquals(arg0, actualTitle);
+    }
+
+    @Then("Check product name {string}, quantity {string} and price {string}")
+    public void checkProductDetails(String arg0, String arg1, String arg2) {
+        if(!driver.findElements(By.id("order-detail-content")).isEmpty()){
+            String orderedProductName = driver.findElement(By.xpath(arg0)).getText();
+            String orderedQuantity = driver.findElement(By.xpath(arg1)).getAttribute("value");;
+            String orderedPrice = driver.findElement(By.id(arg2)).getText();
+
+            Assert.assertEquals(productName, orderedProductName);
+            Assert.assertEquals(quantity, orderedQuantity);
+            Assert.assertEquals(price, orderedPrice);
+        }else{ }
+
+
     }
 
     @Then("Test closure activities")
